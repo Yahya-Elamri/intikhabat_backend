@@ -1,0 +1,98 @@
+scalar Long
+scalar Date
+
+type Montakhib {
+    id: ID!
+    nom: String!
+    prenom: String!
+    cin: String!
+    dateNaissance: Date!  # ISO-8601 format
+    lieuNaissance: String!
+    adresse: String!
+    sex: Sex!
+    education: Education!
+    situationFamiliale: SituationFamiliale!
+    jamaa: Jamaa!
+}
+
+type Employer {
+    id: ID!
+    nom: String!
+    prenom: String!
+    username: String!
+    cin: String!
+    dateNaissance: Date!
+    roles: [Role!]!
+}
+
+type Jamaa {
+    id: ID!
+    nom: String
+    lastId: Long
+    montakhibs: [Montakhib!]!
+}
+
+enum Sex {
+    Homme
+    Femme
+}
+
+enum Role {
+    Admin
+    Search
+    Add
+    Manage
+    Print
+    Statistic
+}
+
+enum SituationFamiliale {
+    MARIE
+    DIVORCE
+    CELIBATAIRE
+    VEUF
+}
+
+enum Education {
+    SANS
+    PRIMAIRE
+    COLLEGE
+    LYCEE
+    UNIVERSITAIRE
+}
+
+input MontakhibInput {
+    nom: String!
+    prenom: String!
+    cin: String!
+    dateNaissance: String!
+    lieuNaissance: String!
+    adresse: String!
+    sex: Sex!
+    education: Education!
+    situationFamiliale: SituationFamiliale!
+    jamaaId: ID!
+}
+
+input JamaaInput {
+    nom: String
+    lastId: Long
+}
+
+type Query {
+    getAllMontakhibin: [Montakhib]
+    getMontakhib(id: ID!): Montakhib
+    getJamaa(id: ID!): Jamaa
+    searchMontakhibs(cin: String): [Montakhib!]!
+    searchMontakhibByNomAndPrenom(nom: String, prenom: String):[Montakhib!]
+    getAllEmployers: [Employer!]!
+    getEmployerById(id: ID!): Employer
+    getEmployerByCin(cin: String!): Employer
+    getEmployerByNomAndPrenom(nom: String!, prenom: String!): [Employer!]!
+}
+
+type Mutation {
+    createMontakhib(input: MontakhibInput!): Montakhib!
+    createJamaa(input: JamaaInput!): Jamaa!
+    updateMontakhib(id: ID!, input: MontakhibInput!): Montakhib!
+}

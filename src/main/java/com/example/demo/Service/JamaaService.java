@@ -1,0 +1,32 @@
+package com.example.demo.Service;
+
+import com.example.demo.Dto.JamaaDTO;
+import com.example.demo.Dto.JamaaInputDTO;
+import com.example.demo.Entity.Jamaa;
+import com.example.demo.Mapper.JamaaMapper;
+import com.example.demo.Repository.JamaaRepository;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@RequiredArgsConstructor
+public class JamaaService {
+
+    private final JamaaRepository repository;
+    private final JamaaMapper mapper;
+
+    @Transactional(readOnly = true)
+    public JamaaDTO findById(Long id) {
+        return repository.findById(id)
+                .map(mapper::toDto)
+                .orElseThrow(() -> new EntityNotFoundException("Jamaa not found with id: " + id));
+    }
+
+    @Transactional
+    public JamaaDTO create(JamaaInputDTO dto) {
+        Jamaa entity = mapper.toEntity(dto);
+        return mapper.toDto(repository.save(entity));
+    }
+}

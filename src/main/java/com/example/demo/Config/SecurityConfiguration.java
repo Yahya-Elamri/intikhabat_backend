@@ -39,10 +39,14 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/api/v1/auth/**").permitAll()
                 .requestMatchers("/graphiql", "/graphql").permitAll()
-                .requestMatchers("/admin/**").hasAnyAuthority("Admin")  // Admin-only endpoints
-                .requestMatchers("/user/**").hasAuthority("Search")  // User endpoints
+                .requestMatchers("/api/v1/admin/**").hasAnyAuthority("Admin")  // Admin-only endpoints
+                .requestMatchers("/api/v1/search/**").hasAuthority("Search")
+                .requestMatchers("/api/v1/add/**").hasAuthority("Add")
+                .requestMatchers("/api/v1/manage/**").hasAuthority("Manage")
+                .requestMatchers("/api/v1/print/**").hasAuthority("Print")
+                .requestMatchers("/api/v1/statistic/**").hasAuthority("Statistic")// User endpoints
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

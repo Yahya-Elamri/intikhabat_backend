@@ -1,15 +1,18 @@
 package com.example.demo.Controller.Employer;
 
+import ch.qos.logback.classic.encoder.JsonEncoder;
 import com.example.demo.Dto.EmployerDTO;
 import com.example.demo.Dto.EmployerInputDTO;
 import com.example.demo.Service.EmployerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/employers")
+@RequestMapping("/api/v1/admin/employers")
 @RequiredArgsConstructor
 public class EmployerController {
 

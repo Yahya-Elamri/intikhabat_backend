@@ -6,6 +6,8 @@ import com.example.demo.Entity.Employer;
 import com.example.demo.Mapper.EmployerMapper;
 import com.example.demo.Repository.EmployerRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,10 +20,13 @@ public class EmployerService{
 
     private final EmployerRepository employerRepository;
     private final EmployerMapper employerMapper;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Transactional
     public EmployerDTO createEmployer(EmployerInputDTO inputDTO) {
         Employer employer = employerMapper.toEntityFromInput(inputDTO);
+        employer.setPassword(passwordEncoder.encode(inputDTO.password()));
         Employer saved = employerRepository.save(employer);
         return employerMapper.toDTO(saved);
     }
@@ -64,8 +69,9 @@ public class EmployerService{
         existing.setCin(inputDTO.cin());
         existing.setTelephone(inputDTO.telephone());
         existing.setRoles(inputDTO.roles());
-        // password is typically encoded before setting if needed
-
+        if(!inputDTO.password().isEmpty()){
+            existing.setPassword(passwordEncoder.encode(inputDTO.password()));
+        }
         Employer updated = employerRepository.save(existing);
         return employerMapper.toDTO(updated);
     }

@@ -18,22 +18,25 @@ public class EmployerGraphQLController {
     private final EmployerService employerService;
 
     @QueryMapping
-    @PreAuthorize("hasAnyAuthority('Admin', 'Search')")
+    @PreAuthorize("hasAuthority('Admin')")
     public List<EmployerDTO> getAllEmployers() {
         return employerService.getAllEmployers();
     }
 
     @QueryMapping
+    @PreAuthorize("hasAuthority('Admin')")
     public EmployerDTO getEmployerById(@Argument Long id) {
         return employerService.getEmployerById(id);
     }
 
     @QueryMapping
+    @PreAuthorize("hasAuthority('Admin')")
     public EmployerDTO getEmployerByCin(@Argument String cin) {
         return employerService.findByCin(cin);
     }
 
     @QueryMapping
+    @PreAuthorize("hasAuthority('Admin')")
     public List<EmployerDTO> getEmployerByNomAndPrenom(@Argument String nom, @Argument String prenom) {
         return employerService.findByNomAndPrenom(nom, prenom);
     }

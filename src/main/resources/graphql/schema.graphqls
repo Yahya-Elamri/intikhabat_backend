@@ -22,6 +22,7 @@ type Employer {
     username: String!
     cin: String!
     dateNaissance: Date!
+    telephone:String
     roles: [Role!]!
 }
 

@@ -38,15 +38,15 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
-                .authorizeRequests()
+                .authorizeHttpRequests()
                 .requestMatchers("/api/v1/auth/**").permitAll()
                 .requestMatchers("/graphiql", "/graphql").permitAll()
                 .requestMatchers("/api/v1/admin/**").hasAnyAuthority("Admin")  // Admin-only endpoints
-                .requestMatchers("/api/v1/search/**").hasAuthority("Search")
-                .requestMatchers("/api/v1/add/**").hasAuthority("Add")
-                .requestMatchers("/api/v1/manage/**").hasAuthority("Manage")
-                .requestMatchers("/api/v1/print/**").hasAuthority("Print")
-                .requestMatchers("/api/v1/statistic/**").hasAuthority("Statistic")// User endpoints
+                .requestMatchers("/api/v1/search/**").hasAnyAuthority("Search")
+                .requestMatchers("/api/v1/add/**").hasAnyAuthority("Add")
+                .requestMatchers("/api/v1/manage/**").hasAnyAuthority("Manage")
+                .requestMatchers("/api/v1/print/**").hasAnyAuthority("Print")
+                .requestMatchers("/api/v1/statistic/**").hasAnyAuthority("Statistic")// User endpoints
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

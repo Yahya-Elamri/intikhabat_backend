@@ -39,7 +39,7 @@ public class MontakhibService {
 
     @Transactional(readOnly = true)
     public List<MontakhibDTO> searchByCin(String cin) {
-        return repository.findByCinContainingIgnoreCase(cin)
+        return repository.findByCinIgnoreCase(cin)
                 .stream()
                 .map(mapper::toDto)
                 .toList();
@@ -62,8 +62,12 @@ public class MontakhibService {
         Jamaa jamaa = jamaaRepository.findById(dto.jamaaId())
                 .orElseThrow(() -> new EntityNotFoundException("Jamaa not found with id: " + dto.jamaaId()));
 
+        jamaa.setLastId((jamaa.getLastId() == null ? 1 : jamaa.getLastId() + 1));
+        jamaaRepository.save(jamaa);
+
         Montakhib entity = mapper.toEntity(dto);
         entity.setJamaa(jamaa);
+
         return mapper.toDto(repository.save(entity));
     }
 

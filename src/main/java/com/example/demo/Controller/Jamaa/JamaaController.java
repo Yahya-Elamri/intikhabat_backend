@@ -7,12 +7,19 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/jamaas")
+@RequestMapping("/api/v1/jamaas")
 @RequiredArgsConstructor
 public class JamaaController {
 
     private final JamaaService service;
+
+    @GetMapping
+    public List<JamaaDTO> getByAll() {
+        return service.findAll();
+    }
 
     @GetMapping("/{id}")
     public JamaaDTO getById(@PathVariable Long id) {

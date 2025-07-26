@@ -15,7 +15,7 @@ public interface MontakhibRepository extends JpaRepository<Montakhib, Long> {
     Optional<Montakhib> findByIdWithJamaa(@Param("id") Long id);
 
     // Case-insensitive search
-    List<Montakhib> findByCinContainingIgnoreCase(String cin);
+    List<Montakhib> findByCinIgnoreCase(String cin);
 
     // Existence check by CIN
     boolean existsByCin(String cin);

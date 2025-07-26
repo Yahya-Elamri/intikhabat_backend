@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/montakhibs")
+@RequestMapping("/api/v1/add/montakhibs")
 @RequiredArgsConstructor
 public class MontakhibController {
 
@@ -28,6 +28,7 @@ public class MontakhibController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public MontakhibDTO create(@RequestBody MontakhibInputDTO dto) {
+        System.out.println("wslna " + dto.toString());
         return service.create(dto);
     }
 

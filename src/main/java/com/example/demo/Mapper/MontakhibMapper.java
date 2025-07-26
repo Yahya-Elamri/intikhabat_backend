@@ -14,6 +14,7 @@ public interface MontakhibMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "jamaa", ignore = true)
+    @Mapping(target = "dateNaissance", source = "dateNaissance", qualifiedByName = "stringToDate")
     Montakhib toEntity(MontakhibInputDTO dto);
 
     @Mapping(target = "jamaa", ignore = true)
@@ -51,5 +52,15 @@ public interface MontakhibMapper {
     }
     private String formatDate(Date date) {
         return date != null ? new SimpleDateFormat("yyyy-MM-dd").format(date) : null;
+    }
+
+    @Named("stringToDate")
+    static Date mapStringToDate(String date) {
+        if (date == null) return null;
+        try {
+            return java.sql.Date.valueOf(date); // assumes format "yyyy-MM-dd"
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Invalid date format. Expected yyyy-MM-dd", e);
+        }
     }
 }

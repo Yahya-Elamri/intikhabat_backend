@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class JamaaService {
@@ -22,6 +24,14 @@ public class JamaaService {
         return repository.findById(id)
                 .map(mapper::toDto)
                 .orElseThrow(() -> new EntityNotFoundException("Jamaa not found with id: " + id));
+    }
+
+    @Transactional(readOnly = true)
+    public List<JamaaDTO> findAll() {
+        return repository.findAll()
+                .stream()
+                .map(mapper::toDto)
+                .toList();
     }
 
     @Transactional

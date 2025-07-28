@@ -5,6 +5,7 @@ import com.example.demo.Dto.MontakhibInputDTO;
 import com.example.demo.Service.MontakhibService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -33,7 +34,9 @@ public class MontakhibController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('Manage')")
     public MontakhibDTO update(@PathVariable Long id, @RequestBody MontakhibInputDTO dto) {
+        System.out.println("wslna 0");
         return service.update(id, dto);
     }
 }

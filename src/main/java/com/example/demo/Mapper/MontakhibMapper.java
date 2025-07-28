@@ -43,7 +43,7 @@ public interface MontakhibMapper {
         }
     }
 
-    private Date parseDate(String dateStr) {
+    default Date parseDate(String dateStr) {
         try {
             return new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
         } catch (ParseException e) {

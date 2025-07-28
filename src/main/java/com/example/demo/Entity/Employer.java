@@ -47,7 +47,7 @@ public class Employer implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 43)
     private String roles;
 
     @Override

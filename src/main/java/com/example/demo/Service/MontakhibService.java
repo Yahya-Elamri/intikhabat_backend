@@ -73,22 +73,15 @@ public class MontakhibService {
 
     @Transactional
     public MontakhibDTO update(Long id, MontakhibInputDTO dto) {
-        System.out.println("wsla 0" + id);
         Montakhib existing = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Montakhib not found with id: " + id));
 
-        System.out.println("wsla 0 blz");
         // Check for CIN uniqueness only if it's changed
         if (!existing.getCin().equals(dto.cin()) && repository.existsByCin(dto.cin())) {
             throw new DataIntegrityViolationException("CIN must be unique");
         }
 
-        System.out.println("wsla 32" + dto.jamaaId());
 
-        Jamaa jamaa = jamaaRepository.findById(dto.jamaaId())
-                .orElseThrow(() -> new EntityNotFoundException("Jamaa not found with id: " + dto.jamaaId()));
-
-        System.out.println("wsla 0");
         // Update fields
         existing.setNom(dto.nom());
         existing.setPrenom(dto.prenom());
@@ -99,8 +92,18 @@ public class MontakhibService {
         existing.setSex(dto.sex());
         existing.setEducation(dto.education());
         existing.setSituationFamiliale(dto.situationFamiliale());
-        existing.setJamaa(jamaa);
-        System.out.println("wslna 0");
+        if(dto.jamaaId() != null) {
+            Jamaa jamaa = jamaaRepository.findById(dto.jamaaId())
+                    .orElseThrow(() -> new EntityNotFoundException("Jamaa not found with id: " + dto.jamaaId()));
+            existing.setJamaa(jamaa);
+        }
         return mapper.toDto(repository.save(existing));
+    }
+
+    @Transactional
+    public void deleteMontakhib(Long id) {
+        Montakhib existing = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Montakhib not found with id: " + id));
+        repository.delete(existing);
     }
 }

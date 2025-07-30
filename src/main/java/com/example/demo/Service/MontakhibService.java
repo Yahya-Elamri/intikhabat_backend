@@ -46,6 +46,14 @@ public class MontakhibService {
     }
 
     @Transactional(readOnly = true)
+    public List<MontakhibDTO> searchByJamaaNom(String nom){
+        return  repository.findByJamaaNom(nom)
+                .stream()
+                .map(mapper::toDto)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
     public List<MontakhibDTO>searchByNomAndPrenom(String nom,String prenom){
         return repository.searchByNomAndPrenom(nom,prenom)
                 .stream()

@@ -87,6 +87,7 @@ type Query {
     searchMontakhibs(cin: String): [Montakhib!]!
     searchMontakhibByNomAndPrenom(nom: String, prenom: String):[Montakhib!]
     getAllEmployers: [Employer!]!
+    getMontakhibByJamaa(jamaa: String): [Montakhib]
     getEmployerById(id: ID!): Employer
     getEmployerByCin(cin: String!): Employer
     getEmployerByNomAndPrenom(nom: String!, prenom: String!): [Employer!]!

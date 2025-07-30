@@ -47,6 +47,11 @@ public class MontakhibGraphQLController {
         return montakhibService.searchByNomAndPrenom(nom,prenom);
     }
 
+    @QueryMapping
+    public List<MontakhibDTO> getMontakhibByJamaa(@Argument String jamaa){
+        return montakhibService.searchByJamaaNom(jamaa);
+    }
+
     @MutationMapping
     public MontakhibDTO createMontakhib(@Argument MontakhibInputDTO input) {
         return montakhibService.create(input);

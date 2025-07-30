@@ -19,7 +19,7 @@ public class Jamaa {
     private Long id;
 
 
-    private String Nom;
+    private String nom;
 
     private Long lastId;
 
